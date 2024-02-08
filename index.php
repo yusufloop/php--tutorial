@@ -1,67 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+$books = [
+    [
+        'name' => 'ikan',
+        'author' => 'ayam',
+        'releaseYear' => 1992,
+        'url' => 'google.com',
+    ],
+    [
+        'name' => '1 ikan',
+        'author' => '2 ayam',
+        'releaseYear' => 1990,
+        'url' => 'google.com',
+    ],
+    [
+        'name' => '2 ikan',
+        'author' => '2 ayam',
+        'releaseYear' => 1993,
+        'url' => 'google.com',
+    ],
+];
 
-</head>
+function filter($items, $fn)
+{
+    $filteredItems = [];
 
-<body>
-    <h1>Recommend books</h1>
-
-    <?php
-    $books = [
-        [
-            'name' => 'ikan',
-            'author' => 'ayam',
-            'releaseYear' => 1992,
-            'url' => 'google.com',
-        ],
-        [
-            'name' => '1 ikan',
-            'author' => '2 ayam',
-            'releaseYear' => 1990,
-            'url' => 'google.com',
-        ],
-        [
-            'name' => '2 ikan',
-            'author' => '2 ayam',
-            'releaseYear' => 1993,
-            'url' => 'google.com',
-        ],
-    ];
-
-    function filterByAuthor($books, $author)
-    {
-        $filterBooks = [];
-
-        foreach($books as $book){
-            if($book['author'] === $author){
-                $filteredBooks[] = $book;
-            }
+    foreach($items as $item){
+        if($fn($item)){
+            $filteredItems[] = $item;
         }
-
-        return $filteredBooks;
     }
 
+    return $filteredItems;
+}
 
-    ?>
-    <ul>
-        <?php foreach (filterByAuthor($books,'ayam') as $book) : ?>
+$filteredBooks = array_filter($books, function($book){
+    return $book['author'] === '2 ayam';
+});
 
-            <li>
-                <a href="<?= $book['url']  ?>">
-                    <?= $book['name'] ?> (<?= $book['releaseYear'] ?>) - By <?= $book['author'] ?>
-                </a>
-            </li>
+require "index.view.php";
+
+// $name = 'Laracasts';
+// $cost = 15;
+
+// $business= [
+//     'name' => 'LAracast',
+//     'cost' => 15,
+//     'categories' => ["testing", "pHP", "JS"],
+// ];
+
+// function register($user){
 
 
-        <?php endforeach; ?>
-    </ul>
+// }
 
-
-</body>
-
-</html>
+// require "index.view.php";
